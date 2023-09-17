@@ -135,6 +135,29 @@ export const create = async () => {
     }
   });
 
+  app.get('/send-data', async (req,res) => {
+    let remoteUrl = process.env.BACKEND_URL + "/get-profile";
+    if (!remoteUrl) {
+      return res.render(`${__dirname}/views/profile`, { error: 'Client: No remote URL found' });
+    }
+
+    const data = {
+      name: 'John Doe',
+      email: 'johndoe@example.com',
+    };
+
+    fetch('/send-data', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+
+  });
+
+
+
   // instead of 404 - just return home page
   app.get('*', (_, res) => {
     res.redirect('/');
